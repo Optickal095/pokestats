@@ -1,0 +1,14 @@
+:root {
+  --bg: #f7f7f4;
+  --text: #1c1d21;
+  --muted: #5f6470;
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+
+  font: 16px/1.5 var(--sans);
+  color: var(--text);
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+}
