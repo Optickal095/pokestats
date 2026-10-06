@@ -2,12 +2,27 @@
 
 Dashboard interactivo con datos de los 1.025 Pokémon: tipos, estadísticas base, generaciones y efectividad entre tipos. En español e inglés.
 
-> En construcción. Fase 1 lista: pipeline de datos.
+![Dashboard de PokéStats](docs/screenshot.png)
+
+## Qué muestra
+
+- **Indicadores:** cantidad de Pokémon, promedio de estadísticas totales, tipo más común, el más poderoso y el más rápido.
+- **Filtros** por generación, tipo y categoría (legendarios y míticos o el resto). Todos los gráficos y números se actualizan juntos, y hacer clic en una barra de tipo también filtra.
+- **Pokémon por tipo**, **poder por tipo** (diagrama de caja), **poder por generación** (con y sin legendarios), **legendarios vs. el resto**, **altura vs. peso** (escalas logarítmicas) y la **tabla de efectividad** entre los 18 tipos.
+- **Cada gráfico tiene su vista de tabla**, para leer los datos sin depender del color ni del mouse.
+- **Español e inglés**, con los nombres oficiales de Pokémon y tipos, y **modo claro y oscuro** según el sistema.
+
+### Decisiones de visualización
+
+- **Paleta validada** para daltonismo y contraste en ambos modos. Los gráficos usan dos colores como máximo, más gris de contexto.
+- **Los colores tradicionales de los tipos solo aparecen junto al nombre del tipo** (filtros e indicadores). Con 18 tipos, el color por sí solo no permite distinguirlos.
+- **Sin gráficos de doble eje:** "poder por generación" compara dos promedios en la misma escala.
+- **La tabla de efectividad usa una escala divergente** centrada en ×1 (gris): azul para resistencias e inmunidades, rojo para súper eficaz, con el multiplicador escrito en cada celda.
 
 ## Stack
 
 - **React 19 + TypeScript**, con Vite
-- **Apache ECharts** para los gráficos
+- **Apache ECharts** para los gráficos, con un componente React propio (sin wrapper) y solo los módulos usados
 - **react-i18next** para español e inglés
 - **Vitest** para los tests
 
@@ -39,9 +54,9 @@ npm run build
 ## Hoja de ruta
 
 - [x] Fase 1: pipeline de datos
-- [ ] Fase 2: dashboard (indicadores, filtros y gráficos)
+- [x] Fase 2: dashboard (indicadores, filtros y gráficos), en español e inglés
 - [ ] Fase 3: comparador y ficha de cada Pokémon
-- [ ] Fase 4: español e inglés, diseño responsive y publicación en GitHub Pages
+- [ ] Fase 4: publicación en GitHub Pages y tarjeta en el portfolio
 
 ---
 
