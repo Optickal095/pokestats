@@ -31,15 +31,44 @@ Dashboard interactivo con datos de los 1.025 Pokémon: tipos, estadísticas base
 Los datos vienen de [PokeAPI](https://pokeapi.co). La app no consulta la API en cada visita: un script descarga todo una vez y genera `public/data/pokedex.json` (~320 KB), como pide la [política de uso justo](https://pokeapi.co/docs/v2#fairuse) de PokeAPI. Así el dashboard carga rápido y no depende de que la API esté disponible.
 
 ```
-PokeAPI (GraphQL, 1 consulta) → scripts/fetch-data.ts → src/data/transform.ts → public/data/pokedex.json → app
+PokeAPI (GraphQL, 1 consulta) → PokeApiGraphqlSource → BuildPokedex → JsonFilePokedexWriter → public/data/pokedex.json → app
 ```
 
-La limpieza (`src/data/transform.ts`) son funciones puras con tests:
+La traducción del esquema de PokeAPI al dominio (`src/infrastructure/pokeapi/transform.ts`) son funciones puras con tests:
 
 - Una entrada por especie: se descartan las formas alternativas (ids desde 10001), aunque PokeAPI marque algunas como "por defecto", como Ursaluna Luna Sangrienta.
 - Unidades convertidas: decímetros → metros y hectogramos → kilos.
 - Nombres de Pokémon, tipos y generaciones en español e inglés.
 - Tabla de efectividad entre los 18 tipos de combate, guardando solo los multiplicadores distintos de ×1.
+
+## Arquitectura
+
+Clean Architecture: las dependencias apuntan solo hacia adentro, y la lógica no sabe de dónde vienen los datos ni cómo se dibujan.
+
+```
+src/
+├── domain/              Pokémon, Pokédex, filtros y cálculos (TypeScript puro, con tests)
+├── application/
+│   ├── ports/             PokedexRepository (app) · PokedexSource y PokedexWriter (pipeline de datos)
+│   └── use-cases/         BuildPokedex: fuente → Pokédex → escritor
+├── infrastructure/      Adaptadores de los puertos
+│   ├── pokeapi/           PokeApiGraphqlSource + transform (capa anticorrupción del esquema de PokeAPI)
+│   ├── http/              StaticJsonPokedexRepository (lee el JSON publicado)
+│   └── node/              JsonFilePokedexWriter (solo Node, lo usa el script)
+├── presentation/        React
+│   ├── pokedex/           Provider que inyecta el repositorio + hook usePokedex
+│   ├── components/        Dashboard, filtros (useFilters), indicadores, tarjetas
+│   ├── charts/            Componentes de gráficos (solo dibujan) y Chart (envoltorio de ECharts)
+│   │   └── options/         Configuración de cada gráfico como funciones puras, con tests
+│   ├── i18n/ · theme/     Idiomas y paleta (datos separados del hook usePalette)
+└── main.tsx             Raíz de composición de la app
+scripts/fetch-data.ts    Raíz de composición del pipeline de datos
+```
+
+- **Inversión de dependencias:** los componentes piden el Pokédex a un `PokedexRepository` inyectado con un Provider de React. Cambiar el JSON estático por una API es escribir otro adaptador y cambiar una línea en `main.tsx`.
+- **Responsabilidad única:** cada gráfico separa qué datos calcular (dominio), cómo se configura (función pura en `options/`) y cómo se dibuja (componente).
+- **Patrones:** Repository y Adapter (fuentes de datos), capa anticorrupción (`transform.ts`), Strategy (grupos del gráfico de dispersión), Provider para la inyección de dependencias.
+- **Tests por capa:** dominio y configuraciones de gráficos con funciones puras; caso de uso con dobles de los puertos; adaptadores con un `fetch` falso.
 
 ## Desarrollo
 

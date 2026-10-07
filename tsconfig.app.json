@@ -22,5 +22,7 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  // Node-only adapters (fs) are type-checked by tsconfig.node.json, through the data script.
+  "exclude": ["src/infrastructure/node"]
 }
