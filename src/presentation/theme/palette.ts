@@ -13,6 +13,8 @@ export interface ChartPalette {
   axis: string
   series1: string
   series2: string
+  /** Third series, for the comparator only: three is the most hues that stay distinguishable in every pair. */
+  series3: string
   /** De-emphasized marks: the "everything else" in an emphasis chart. */
   context: string
   immune: string
@@ -30,6 +32,7 @@ export const lightPalette: ChartPalette = {
   axis: '#c3c2b7',
   series1: '#2a78d6',
   series2: '#eb6834',
+  series3: '#1baf7a',
   context: '#c3c2b7',
   immune: '#184f95',
   resisted: '#86b6ef',
@@ -46,6 +49,7 @@ export const darkPalette: ChartPalette = {
   axis: '#383835',
   series1: '#3987e5',
   series2: '#d95926',
+  series3: '#199e70',
   context: '#55554f',
   immune: '#6da7ec',
   resisted: '#1c5cab',

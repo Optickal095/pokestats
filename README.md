@@ -9,6 +9,8 @@ Dashboard interactivo con datos de los 1.025 Pokémon: tipos, estadísticas base
 - **Indicadores:** cantidad de Pokémon, promedio de estadísticas totales, tipo más común, el más poderoso y el más rápido.
 - **Filtros** por generación, tipo y categoría (legendarios y míticos o el resto). Todos los gráficos y números se actualizan juntos, y hacer clic en una barra de tipo también filtra.
 - **Pokémon por tipo**, **poder por tipo** (diagrama de caja), **poder por generación** (con y sin legendarios), **legendarios vs. el resto**, **altura vs. peso** (escalas logarítmicas) y la **tabla de efectividad** entre los 18 tipos.
+- **Comparador** de hasta 3 Pokémon, con buscador por nombre o número en ambos idiomas.
+- **Ficha de cada Pokémon** (estadísticas, generación, tamaño y cadena evolutiva navegable). Se abre desde el comparador, los indicadores o un punto del gráfico de altura vs. peso.
 - **Cada gráfico tiene su vista de tabla**, para leer los datos sin depender del color ni del mouse.
 - **Español e inglés**, con los nombres oficiales de Pokémon y tipos, y **modo claro y oscuro** según el sistema.
 
@@ -16,6 +18,7 @@ Dashboard interactivo con datos de los 1.025 Pokémon: tipos, estadísticas base
 
 - **Paleta validada** para daltonismo y contraste en ambos modos. Los gráficos usan dos colores como máximo, más gris de contexto.
 - **Los colores tradicionales de los tipos solo aparecen junto al nombre del tipo** (filtros e indicadores). Con 18 tipos, el color por sí solo no permite distinguirlos.
+- **En el comparador, el color sigue al Pokémon:** cada uno conserva su color cuando se quita otro, y todos usan la misma escala (0 a 255, la estadística base más alta).
 - **Sin gráficos de doble eje:** "poder por generación" compara dos promedios en la misma escala.
 - **La tabla de efectividad usa una escala divergente** centrada en ×1 (gris): azul para resistencias e inmunidades, rojo para súper eficaz, con el multiplicador escrito en cada celda.
 
@@ -47,7 +50,7 @@ Clean Architecture: las dependencias apuntan solo hacia adentro, y la lógica no
 
 ```
 src/
-├── domain/              Pokémon, Pokédex, filtros y cálculos (TypeScript puro, con tests)
+├── domain/              Pokémon, Pokédex, filtros, cálculos, búsqueda, evolución y espacios del comparador (TypeScript puro, con tests)
 ├── application/
 │   ├── ports/             PokedexRepository (app) · PokedexSource y PokedexWriter (pipeline de datos)
 │   └── use-cases/         BuildPokedex: fuente → Pokédex → escritor
@@ -57,7 +60,8 @@ src/
 │   └── node/              JsonFilePokedexWriter (solo Node, lo usa el script)
 ├── presentation/        React
 │   ├── pokedex/           Provider que inyecta el repositorio + hook usePokedex
-│   ├── components/        Dashboard, filtros (useFilters), indicadores, tarjetas
+│   ├── selection/         Ficha abierta y Pokémon comparados (reducer + Provider)
+│   ├── components/        Dashboard, filtros (useFilters), indicadores, comparador, buscador, ficha
 │   ├── charts/            Componentes de gráficos (solo dibujan) y Chart (envoltorio de ECharts)
 │   │   └── options/         Configuración de cada gráfico como funciones puras, con tests
 │   ├── i18n/ · theme/     Idiomas y paleta (datos separados del hook usePalette)
@@ -67,7 +71,7 @@ scripts/fetch-data.ts    Raíz de composición del pipeline de datos
 
 - **Inversión de dependencias:** los componentes piden el Pokédex a un `PokedexRepository` inyectado con un Provider de React. Cambiar el JSON estático por una API es escribir otro adaptador y cambiar una línea en `main.tsx`.
 - **Responsabilidad única:** cada gráfico separa qué datos calcular (dominio), cómo se configura (función pura en `options/`) y cómo se dibuja (componente).
-- **Patrones:** Repository y Adapter (fuentes de datos), capa anticorrupción (`transform.ts`), Strategy (grupos del gráfico de dispersión), Provider para la inyección de dependencias.
+- **Patrones:** Repository y Adapter (fuentes de datos), capa anticorrupción (`transform.ts`), Strategy (grupos del gráfico de dispersión), Reducer para el estado de selección, Provider para la inyección de dependencias.
 - **Tests por capa:** dominio y configuraciones de gráficos con funciones puras; caso de uso con dobles de los puertos; adaptadores con un `fetch` falso.
 
 ## Desarrollo
@@ -84,7 +88,7 @@ npm run build
 
 - [x] Fase 1: pipeline de datos
 - [x] Fase 2: dashboard (indicadores, filtros y gráficos), en español e inglés
-- [ ] Fase 3: comparador y ficha de cada Pokémon
+- [x] Fase 3: comparador y ficha de cada Pokémon
 - [ ] Fase 4: publicación en GitHub Pages y tarjeta en el portfolio
 
 ---

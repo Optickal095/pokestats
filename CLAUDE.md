@@ -10,6 +10,7 @@ Clean Architecture; ver la sección "Arquitectura" del README.
 - `src/application/`: puertos (`ports/`) y casos de uso (`use-cases/`). Clases planas.
 - `src/infrastructure/`: adaptadores. `node/` usa `fs` y está excluido de `tsconfig.app.json` (lo revisa `tsconfig.node.json` a través del script).
 - `src/presentation/`: React. Los componentes no hacen `fetch` ni calculan agregados: piden datos al dominio, arman la configuración con funciones de `charts/options/` y dibujan.
+- Estado compartido de la UI (ficha abierta, Pokémon comparados) vive en `presentation/selection/` como reducer puro con tests; los componentes lo usan con `useSelection`.
 - Raíces de composición: `src/main.tsx` (app) y `scripts/fetch-data.ts` (pipeline). Ningún otro archivo instancia adaptadores.
 
 Estilo: sin punto y coma, comillas simples. `erasableSyntaxOnly` está activo: nada de propiedades en el constructor (`constructor(private x)`), ni enums, ni namespaces; declara los campos explícitamente.

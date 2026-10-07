@@ -25,7 +25,7 @@ export function baseOption(palette: ChartPalette) {
   }
 }
 
-export function valueAxis(palette: ChartPalette, extra: Record<string, unknown> = {}) {
+export function valueAxis<E extends object = object>(palette: ChartPalette, extra: E = {} as E) {
   return {
     type: 'value',
     axisLine: { show: false },
@@ -36,7 +36,7 @@ export function valueAxis(palette: ChartPalette, extra: Record<string, unknown> 
   }
 }
 
-export function categoryAxis(palette: ChartPalette, data: string[], extra: Record<string, unknown> = {}) {
+export function categoryAxis<E extends object = object>(palette: ChartPalette, data: string[], extra: E = {} as E) {
   return {
     type: 'category',
     data,
@@ -48,7 +48,7 @@ export function categoryAxis(palette: ChartPalette, data: string[], extra: Recor
 }
 
 /** Legend with marks that mirror the series shape; text stays in text tokens. */
-export function legend(palette: ChartPalette, mark: 'rect' | 'line' | 'dot', extra: Record<string, unknown> = {}) {
+export function legend<E extends object = object>(palette: ChartPalette, mark: 'rect' | 'line' | 'dot', extra: E = {} as E) {
   const icons = { rect: 'roundRect', line: 'roundRect', dot: 'circle' }
   return {
     top: 0,

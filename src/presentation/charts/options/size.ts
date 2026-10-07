@@ -66,6 +66,7 @@ export function buildSizeOption({ pokemon, nameOf, groupNames, axisNames, artwor
       name: groupNames[group.key],
       type: 'scatter',
       symbolSize: 8,
+      cursor: 'pointer',
       // The gray context sits underneath the highlighted groups.
       z: i === 0 ? 1 : 2,
       itemStyle: { borderColor: palette.surface, borderWidth: 1.5, opacity: i === 0 ? 0.7 : 1 },

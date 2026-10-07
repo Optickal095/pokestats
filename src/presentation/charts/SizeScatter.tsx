@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import type { Pokemon } from '../../domain/pokemon.ts'
 import { artworkUrl } from '../artwork.ts'
 import { ChartCard } from '../components/ChartCard.tsx'
+import { useSelection } from '../selection/useSelection.ts'
 import { usePalette } from '../theme/usePalette.ts'
 import { Chart } from './Chart.tsx'
 import { buildSizeOption } from './options/size.ts'
@@ -17,6 +18,7 @@ export function SizeScatter({ pokemon }: Props) {
   const lang = i18n.language as 'es' | 'en'
   const format = (value: number) => value.toLocaleString(lang, { maximumFractionDigits: 1 })
   const nameOf = (p: Pokemon) => p.name[lang]
+  const { open } = useSelection()
 
   const option = buildSizeOption({
     pokemon,
@@ -39,7 +41,12 @@ export function SizeScatter({ pokemon }: Props) {
         rows: heaviestFirst.map((p) => [nameOf(p), format(p.height), format(p.weight)]),
       }}
     >
-      <Chart option={option} height={460} label={t('charts.size.title')} />
+      <Chart
+        option={option}
+        height={460}
+        label={t('charts.size.title')}
+        onClick={(params) => open((params.data as { pokemon: Pokemon }).pokemon.id)}
+      />
     </ChartCard>
   )
 }

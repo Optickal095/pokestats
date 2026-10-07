@@ -6,7 +6,7 @@ interface ChartProps {
   height: number
   /** Accessible name of the chart. */
   label: string
-  onClick?: (params: { name: string; dataIndex: number; seriesIndex?: number }) => void
+  onClick?: (params: { name: string; dataIndex: number; seriesIndex?: number; data?: unknown }) => void
 }
 
 /** Minimal React wrapper around an ECharts instance (SVG renderer). */
