@@ -4,6 +4,7 @@ import { StaticJsonPokedexRepository } from './infrastructure/http/static-json-p
 import App from './presentation/App.tsx'
 import './presentation/i18n/index.ts'
 import { PokedexRepositoryProvider } from './presentation/pokedex/PokedexRepositoryProvider.tsx'
+import '@fontsource-variable/outfit'
 import './index.css'
 
 // Composition root of the app: the only place that picks the adapters.

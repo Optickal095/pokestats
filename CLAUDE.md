@@ -19,6 +19,8 @@ Estilo: sin punto y coma, comillas simples. `erasableSyntaxOnly` está activo: n
 
 Sigue la skill `dataviz`: paleta de 2 colores validada (más gris de contexto), los 18 colores de tipo solo junto al nombre del tipo, sin doble eje, vista de tabla en cada gráfico, modo claro/oscuro.
 
+Aspecto propio, distinto del portfolio de Eduardo: fuente Outfit (`@fontsource-variable/outfit`, importada en `main.tsx`), fondo con brillos de colores, acento violeta y franjas de color de tipo en indicadores y tarjetas. Esas franjas son decorativas: no les asignes significado ni las uses en los gráficos. Si cambias las superficies en `index.css`, actualiza también `theme/palette.ts`.
+
 ## Comandos
 
 ```bash

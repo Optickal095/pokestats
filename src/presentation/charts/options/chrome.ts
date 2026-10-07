@@ -5,7 +5,8 @@ export function escapeHtml(text: string): string {
   return text.replace(/[&<>"']/g, (char) => `&#${char.charCodeAt(0)};`)
 }
 
-const FONT = 'system-ui, -apple-system, "Segoe UI", sans-serif'
+// Same family as the page (self-hosted Outfit, loaded in main.tsx).
+const FONT = '"Outfit Variable", system-ui, -apple-system, "Segoe UI", sans-serif'
 
 /** Shared chrome: recessive hairline axes and grid, text in text tokens, one tooltip style. */
 export function baseOption(palette: ChartPalette) {

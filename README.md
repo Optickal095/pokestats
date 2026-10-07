@@ -21,6 +21,7 @@ Dashboard interactivo con datos de los 1.025 Pokémon: tipos, estadísticas base
 - **Paleta validada** para daltonismo y contraste en ambos modos. Los gráficos usan dos colores como máximo, más gris de contexto.
 - **Los colores tradicionales de los tipos solo aparecen junto al nombre del tipo** (filtros e indicadores). Con 18 tipos, el color por sí solo no permite distinguirlos.
 - **En el comparador, el color sigue al Pokémon:** cada uno conserva su color cuando se quita otro, y todos usan la misma escala (0 a 255, la estadística base más alta).
+- **Color decorativo separado del color de datos:** el fondo, el título y las franjas de las tarjetas usan los colores de los tipos solo como decoración (no codifican nada); los gráficos mantienen su paleta validada.
 - **Sin gráficos de doble eje:** "poder por generación" compara dos promedios en la misma escala.
 - **La tabla de efectividad usa una escala divergente** centrada en ×1 (gris): azul para resistencias e inmunidades, rojo para súper eficaz, con el multiplicador escrito en cada celda.
 
@@ -30,6 +31,7 @@ Dashboard interactivo con datos de los 1.025 Pokémon: tipos, estadísticas base
 - **Apache ECharts** para los gráficos, con un componente React propio (sin wrapper) y solo los módulos usados
 - **react-i18next** para español e inglés
 - **Vitest** para los tests
+- Fuente **Outfit** autoalojada con Fontsource (sin peticiones a servicios externos)
 
 ## Datos
 
