@@ -2,6 +2,8 @@
 
 Dashboard interactivo con datos de los 1.025 Pokémon: tipos, estadísticas base, generaciones y efectividad entre tipos. En español e inglés.
 
+**[Ver en vivo →](https://optickal095.github.io/pokestats/)**
+
 ![Dashboard de PokéStats](docs/screenshot.png)
 
 ## Qué muestra
@@ -78,18 +80,20 @@ scripts/fetch-data.ts    Raíz de composición del pipeline de datos
 
 ```bash
 npm install
-npm run dev     # http://localhost:5173
+npm run dev     # http://localhost:5173/pokestats/
 npm run data    # vuelve a descargar los datos (solo cuando sale una generación nueva)
 npm test
 npm run build
 ```
+
+Cada push a `main` corre tests, lint y build en GitHub Actions y publica `dist/` en GitHub Pages (`.github/workflows/deploy.yml`).
 
 ## Hoja de ruta
 
 - [x] Fase 1: pipeline de datos
 - [x] Fase 2: dashboard (indicadores, filtros y gráficos), en español e inglés
 - [x] Fase 3: comparador y ficha de cada Pokémon
-- [ ] Fase 4: publicación en GitHub Pages y tarjeta en el portfolio
+- [x] Fase 4: publicación en GitHub Pages y tarjeta en el portfolio
 
 ---
 

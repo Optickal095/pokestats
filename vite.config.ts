@@ -4,6 +4,8 @@ import { defineConfig } from 'vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  // Published at https://optickal095.github.io/pokestats/
+  base: '/pokestats/',
   build: {
     rolldownOptions: {
       output: {
